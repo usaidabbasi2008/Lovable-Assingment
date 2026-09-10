@@ -3,7 +3,7 @@ import { PlusCircle, Mic } from "@deemlol/next-icons"
 function Hero() {
   return (
     <div>
-<main className='flex flex-col justify-center items-center gap-4  min-h-screen bg-gray-100'>
+<main className='  flex flex-col  justify-center items-center gap-4  min-h-screen bg-gray-100'>
 
 <p className=' text-gray-500'>AI App Builder</p>
 <h1  className='text-3xl font-bold text-center'>
@@ -23,6 +23,9 @@ function Hero() {
 </select>
 
 <Mic size={20} color="gray" strokeWidth={1} />
+
+
+
 </div>
  </div>
 </div>
