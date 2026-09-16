@@ -1,39 +1,136 @@
-import React from 'react'
-import { PlusCircle, Mic } from "@deemlol/next-icons"
-function Hero() {
+"use client";
+
+import { useState } from "react";
+
+export default function AIChat() {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const sendMessage = async () => {
+    if (!message.trim() || loading) return;
+
+    const userMessage = message;
+
+    // User message show
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "user",
+        text: userMessage,
+      },
+    ]);
+
+    setMessage("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: userMessage,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("API STATUS:", res.status);
+      console.log("API DATA:", data);
+
+      // Agar API error de
+      if (!res.ok) {
+        throw new Error(data.error || "API request failed");
+      }
+
+      // AI response
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          text: data.reply || "AI ne response nahi diya.",
+        },
+      ]);
+    } catch (error) {
+      console.error("CHAT ERROR:", error);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          text: `Error: ${error.message}`,
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div>
-<main className='  flex flex-col  justify-center items-center gap-4  min-h-screen bg-gray-100'>
+    <div className="w-full max-w-3xl mx-auto">
 
-<p className=' text-gray-500'>AI App Builder</p>
-<h1  className='text-3xl font-bold text-center'>
-  Ready to bring your ideas to life?
-</h1>
- 
- <div className='flex gap-4  flex-col  rounded-2xl p-5 w-150  shadow-md border-2 border-gray-300'>
-<input  className=' outline-none ' type="text" name="" id=""  placeholder="Ask lovable to create a dashboard to...." />
-<div className='flex justify-between items-center'>
+      {/* Messages */}
+      <div className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
 
-<PlusCircle size={30} color="gray" strokeWidth={1.5} />
-<div className='flex gap-4 justify-center items-center'>  
-<select className='outline-none' name="" id="">
-  <option   value="">build</option>
-  <option value="option1">Option 1</option>
-  <option value="option2">Option 2</option>
-</select>
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`flex ${
+              msg.role === "user"
+                ? "justify-end"
+                : "justify-start"
+            }`}
+          >
+            <div
+              className={`px-5 py-3 rounded-2xl max-w-[80%] ${
+                msg.role === "user"
+                  ? "bg-purple-600 text-white"
+                  : "bg-gray-100 text-black"
+              }`}
+            >
+              {msg.text}
+            </div>
+          </div>
+        ))}
 
-<Mic size={20} color="gray" strokeWidth={1} />
+        {loading && (
+          <div className="flex justify-start">
+            <div className="bg-gray-100 px-5 py-3 rounded-2xl">
+              AI is thinking...
+            </div>
+          </div>
+        )}
 
+      </div>
 
+      {/* Input */}
+      <div className="flex items-center gap-2 border border-black rounded-2xl p-2">
 
-</div>
- </div>
-</div>
-</main>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              sendMessage();
+            }
+          }}
+          placeholder="Ask AI anything..."
+          className="flex-1 px-4 py-3 outline-none"
+        />
 
-        
+        <button
+          onClick={sendMessage}
+          disabled={loading}
+          className="bg-purple-600 text-white px-7 py-3 rounded-xl hover:bg-purple-700 disabled:opacity-50"
+        >
+          {loading ? "..." : "Send"}
+        </button>
+
+      </div>
+
     </div>
-  )
+  );
 }
-
-export default Hero
