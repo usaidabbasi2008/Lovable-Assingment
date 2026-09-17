@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -12,7 +13,6 @@ export default function AIChat() {
 
     const userMessage = message;
 
-    // User message show
     setMessages((prev) => [
       ...prev,
       {
@@ -40,12 +40,10 @@ export default function AIChat() {
       console.log("API STATUS:", res.status);
       console.log("API DATA:", data);
 
-      // Agar API error de
       if (!res.ok) {
         throw new Error(data.error || "API request failed");
       }
 
-      // AI response
       setMessages((prev) => [
         ...prev,
         {
@@ -69,65 +67,158 @@ export default function AIChat() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full px-4   sm:px-6 md:px-8">
 
-      {/* Messages */}
-      <div className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
+      {/* Main Container */}
+      <div className="w-full  max-w-4xl mx-auto">
 
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              msg.role === "user"
-                ? "justify-end"
-                : "justify-start"
-            }`}
-          >
+        {/* Messages */}
+        <div className="space-y-4  min-h-[250px] mb-6 max-h-[350px] overflow-y-auto px-1 sm:px-2">
+
+          {messages.map((msg, index) => (
             <div
-              className={`px-5 py-3 rounded-2xl max-w-[80%] ${
+              key={index}
+              className={`flex ${
                 msg.role === "user"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-100 text-black"
+                  ? "justify-end"
+                  : "justify-start"
               }`}
             >
-              {msg.text}
+              <div
+                className={`
+                  px-4 sm:px-5
+                  py-3
+                  rounded-2xl
+                  max-w-[90%]
+                  sm:max-w-[80%]
+                  break-words
+                  text-sm sm:text-base
+                  ${
+                    msg.role === "user"
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-100 text-black"
+                  }
+                `}
+              >
+                {msg.text}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-        {loading && (
-          <div className="flex justify-start">
-            <div className="bg-gray-100 px-5 py-3 rounded-2xl">
-              AI is thinking...
+          {/* Loading */}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="bg-gray-100 text-gray-700 px-5 py-3 rounded-2xl text-sm sm:text-base">
+                AI is thinking...
+              </div>
             </div>
+          )}
+
+        </div>
+
+
+        {/* ================= INPUT SECTION ================= */}
+
+        <div className="w-full max-w-3xl mx-auto">
+
+          {/* Label */}
+          <label
+            htmlFor="ai-message"
+            className="
+              block
+              text-sm
+              sm:text-base
+              font-semibold
+              text-gray-800
+              mb-2
+              ml-1
+            "
+          >
+            Ask AI
+          </label>
+
+          {/* Input Box */}
+          <div
+            className="
+              w-full
+              flex
+              items-center
+              gap-2
+              p-2
+              bg-white
+              border
+              border-gray-300
+              rounded-2xl
+              shadow-sm
+              transition-all
+              duration-300
+              focus-within:border-purple-500
+              focus-within:ring-2
+              focus-within:ring-purple-100
+            "
+          >
+
+            <input
+              id="ai-message"
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+              placeholder="Ask AI anything..."
+              className="
+                flex-1
+                min-w-0
+                px-3
+                sm:px-4
+                py-3
+                text-sm
+                sm:text-base
+                text-gray-800
+                placeholder:text-gray-400
+                outline-none
+                bg-transparent
+              "
+            />
+
+            {/* Send Button */}
+            <button
+              onClick={sendMessage}
+              disabled={loading}
+              className="
+                shrink-0
+                bg-purple-600
+                text-white
+                font-semibold
+                px-4
+                sm:px-7
+                py-3
+                rounded-xl
+                text-sm
+                sm:text-base
+                transition-all
+                duration-300
+                hover:bg-purple-700
+                hover:scale-[1.02]
+                active:scale-95
+                disabled:opacity-50
+                disabled:cursor-not-allowed
+              "
+            >
+              {loading ? "..." : "Send"}
+            </button>
+
           </div>
-        )}
 
-      </div>
+          {/* Small Text */}
+          <p className="text-center text-xs sm:text-sm text-gray-400 mt-3">
+            Press Enter to send your message
+          </p>
 
-      {/* Input */}
-      <div className="flex items-center gap-2 border border-black rounded-2xl p-2">
-
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              sendMessage();
-            }
-          }}
-          placeholder="Ask AI anything..."
-          className="flex-1 px-4 py-3 outline-none"
-        />
-
-        <button
-          onClick={sendMessage}
-          disabled={loading}
-          className="bg-purple-600 text-white px-7 py-3 rounded-xl hover:bg-purple-700 disabled:opacity-50"
-        >
-          {loading ? "..." : "Send"}
-        </button>
+        </div>
 
       </div>
 
