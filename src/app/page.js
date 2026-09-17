@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import AIChat from './components/AIchat'
+
 function page() {
   return (
     <div>
