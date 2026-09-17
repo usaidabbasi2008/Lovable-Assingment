@@ -79,7 +79,7 @@ function Navbar() {
     after:absolute after:left-0 after:bottom-0
     after:h-[2px] after:w-0
     after:bg-gradient-to-r after:from-purple-500 after:to-pink-500
-    after:transition-all after:duration-30<PASSWORD>"
+    after:transition-all after:duration-300"
             href="/navagition/Pricing"
           >
             {" "}

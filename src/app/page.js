@@ -3,7 +3,7 @@ import React from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 
-function page() {
+function Page() {
   return (
     <div>
 
@@ -16,4 +16,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
