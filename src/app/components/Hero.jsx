@@ -69,10 +69,10 @@ export default function AIChat() {
   return (
     <div className="w-full px-4   sm:px-6 md:px-8">
 
-      {/* Main Container */}
+    
       <div className="w-full  max-w-4xl mx-auto">
 
-        {/* Messages */}
+        
         <div className="space-y-4  min-h-[250px] mb-6 max-h-[350px] overflow-y-auto px-1 sm:px-2">
 
           {messages.map((msg, index) => (
@@ -105,7 +105,7 @@ export default function AIChat() {
             </div>
           ))}
 
-          {/* Loading */}
+          
           {loading && (
             <div className="flex justify-start">
               <div className="bg-gray-100 text-gray-700 px-5 py-3 rounded-2xl text-sm sm:text-base">
@@ -117,7 +117,7 @@ export default function AIChat() {
         </div>
 
 
-        {/* ================= INPUT SECTION ================= */}
+      
 
         <div className="w-full max-w-3xl mx-auto">
 
@@ -137,7 +137,7 @@ export default function AIChat() {
             Ask AI
           </label>
 
-          {/* Input Box */}
+          
           <div
             className="
               w-full
@@ -184,7 +184,7 @@ export default function AIChat() {
               "
             />
 
-            {/* Send Button */}
+          
             <button
               onClick={sendMessage}
               disabled={loading}
@@ -213,7 +213,6 @@ export default function AIChat() {
 
           </div>
 
-          {/* Small Text */}
           <p className="text-center text-xs sm:text-sm text-gray-400 mt-3">
             Press Enter to send your message
           </p>

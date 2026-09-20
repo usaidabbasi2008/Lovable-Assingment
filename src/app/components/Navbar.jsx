@@ -23,10 +23,10 @@ function Navbar() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* ================= DESKTOP / MAIN NAV ================= */}
+        
         <div className="flex items-center justify-between h-20">
 
-          {/* LOGO */}
+          
           <Link
             href="/"
             className="shrink-0 transition-transform duration-300 hover:scale-105"
@@ -40,7 +40,7 @@ function Navbar() {
             />
           </Link>
 
-          {/* DESKTOP LINKS */}
+        
           <div className="hidden lg:flex items-center gap-5 xl:gap-7">
 
             {navLinks.map((link) => (
@@ -77,7 +77,7 @@ function Navbar() {
 
           </div>
 
-          {/* DESKTOP BUTTONS */}
+          
           <div className="hidden lg:flex items-center gap-3">
 
             <Link
@@ -126,7 +126,7 @@ function Navbar() {
 
           </div>
 
-          {/* ================= MOBILE MENU BUTTON ================= */}
+          
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="
@@ -192,7 +192,7 @@ function Navbar() {
 
         </div>
 
-        {/* ================= MOBILE MENU ================= */}
+        
         <div
           className={`
             lg:hidden
@@ -257,7 +257,7 @@ function Navbar() {
               </Link>
             ))}
 
-            {/* MOBILE BUTTONS */}
+          
             <div className="flex flex-col sm:flex-row gap-3 mt-4 px-2">
 
               <Link
